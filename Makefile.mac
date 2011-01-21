@@ -1,0 +1,24 @@
+LDLIBS =
+GLDLIBS = -framework AGL -framework OpenGL -framework GLUT \
+	-framework Foundation
+LDFLAGS  = $(LDLIBS) $(GLDLIBS) -lm
+
+CC = gcc -Wall -O3 -DNDEBUG #-g
+
+MYOBJ = main.o rtimer.o pqelement.o pqheap.o tin.o \
+	refine_tin.o grid.o queue.o geom_tin.o qsort.o \
+	render_tin.o mem_manager.o
+
+PROGS = r.refine
+
+default: $(PROGS)
+
+r.refine: $(MYOBJ) 
+	$(CC) $(LDFLAGS) $(MYOBJ)   -o $@
+clean::	
+	rm $(MYOBJ)
+	rm r.refine
+
+
+%.o:: %.c
+	$(CC) -c $(INCLUDEPATH)  $< -o $@

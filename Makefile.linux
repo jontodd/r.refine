@@ -1,0 +1,23 @@
+INCLUDEPATH  = -I/usr/include/GL/ 
+#LIBPATH = -L/usr/lib/ -L/usr/X11R6/lib/
+LIBPATH = -L/usr/lib64 -L/usr/X11R6/lib
+LINKLIBS =  -lglut -lGLU -lGL -lX11 -lm  -lXmu -lXext -lXi
+
+CC = gcc -Wall -g  
+MYOBJ = main.o rtimer.o pqelement.o pqheap.o tin.o \
+	refine_tin.o grid.o queue.o geom_tin.o qsort.o \
+	render_tin.o  mem_manager.o
+
+PROGS = r.refine
+
+default: $(PROGS)
+
+r.refine: $(MYOBJ) 
+	$(CC) -o $@ $(MYOBJ) $(LIBPATH) $(LINKLIBS)	
+clean::	
+	rm $(MYOBJ)
+	rm r.refine
+
+
+%.o:: %.c
+	$(CC) -c $(INCLUDEPATH)  $< -o $@

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>r.refine</title>
+</head>
+
+<body>
+<!-- <img src="grass.smlogo.gif"> -->
+
+
+<h2>Name</h2>
+<B><tt>r.refine</tt></B>: scalable raster-to-TIN simplification.  
+
+<p><h2>Description</h2>
+<tt>r.refine</tt> takes as input a grid DEM and an error margin and
+simplifies it to the desired accuracy into a TIN. The resulting TIN is
+guaranteed to be within error epsilon from the grid.
+
+
+
+<H2>SYNOPSIS</H2>
+<pre>
+r.refine -help
+Description:
+ r.refine: scalable raster-to-TIN simplification.
+
+Usage:
+ r.refine [-dnr] grid=name [epsilon=value] [tin=name]
+   [output_sites=name] [output_vect=name] [memory=value]
+
+Flags:
+  -d   Do NOT use Delaunay triangulation
+  -n   Include nodata points (in simplification)
+  -r   Render TIN in OpenGL
+
+Parameters:
+          grid   Input raster
+       epsilon   Error threshold, in percentage of max elevation
+                 default: 1.0
+           tin   Output TIN file
+                 default: output.tin
+  output_sites   Name of output sites file.
+                 default: NULL
+   output_vect   Name of output vector file.
+                 default: NULL
+        memory   Main memory size (in MB)
+                 default: 500
+</pre>
+
+<p>The user has to specify an error (<tt>epsilon=xxx</tt>); by default
+this is 1. Point are be dropped from the grid so that the output TIN
+approximates the grid within error <tt>epsilon</tt>. The smaller the
+epsilon, the bigger, and more accurate, the TIN.
+
+<p>The output TIN is output in internal TIN format (the name of the
+tin can be set by the user with <tt>tin=xxx</tt>); It can be also
+output as sites, if the user specifies a sites filename
+(<tt>output_sites=xxx</tt>), or as a vector
+(<tt>output_vect=xxx</tt>).
+
+<p> The user can specify a main memory size (in MB) to be used by
+<tt>r.refine</tt>. The program will at all times use this much memory,
+and the virtual memory system will not be in use.  In practice the 
+<tt>mem=value</tt> should be an underestimate of the amount of available
+(free) main memory on the machine.
+
+
+
+<H2>Examples</H2>
+<pre>
+r.refine grid=xxx.elev eps=10 tin=xxx.tin output_vect=xxx.vect  mem=600
+</pre>
+
+
+
+<H2>NOTES</H2>
+
+The folder comes with several Makefiles, including a GMakefile for
+Grass 5.3.  It can be compiled standalone, or under GRASS. To compile
+standalone:
+<pre>
+cd r.refine
+make -f Makefile.mac
+</pre>
+Then run from the command line:
+<pre>
+./r.refine
+</pre>
+
+<p>To compile under GRASS:
+<pre>
+/path/to/gmake
+</pre>
+
+
+
+
+
+<hr>
+<address></address>
+<!-- hhmts start --> Last modified: Fri Sep 21 14:21:29 EDT 2007 <!-- hhmts end -->
+</body> </html>

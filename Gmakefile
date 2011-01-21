@@ -1,0 +1,46 @@
+CC = gcc
+
+GLDLIBS = -framework AGL -framework OpenGL -framework GLUT \
+	-framework Foundation
+
+SOURCES = main.c geom_tin.c grid.c pqelement.c pqheap.c qsort.c \
+	  queue.c refine_tin.c rtimer.c tin.c render_tin.c mem_manager.c \
+	  grass.c 
+
+HEADERS = 
+
+
+OBJ := $(patsubst %.c,$(OBJARCH)/%.o,$(SOURCES))
+
+
+CFLAGS += -Wall \
+	 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+	-DUSER=\"$(USER)\" -D__GRASS__ #-DNDEBUG
+
+LDFLAGS +=  -O3
+
+LIBS = $(GISLIB) $(GLDLIBS) $(DIG_ATTLIB) $(VASKLIB) $(DATETIMELIB) $(VECTLIB) -lm
+DEPLIBS = $(DEPGISLIB) $(DEPDATETIMELIB) $(DEPVECTLIB) $(DEPDIG_ATTLIB) $(DEPVASKLIB)
+
+
+
+#Note: 	if a header file is modified, the .o files do not get rebuilt..
+#	header files should be included as prerequisites, but does not work 
+#	because of GRASS scripts 
+$(OBJARCH)/%.o:%.c
+	$(CC) -c $(CFLAGS)  $< -o $@
+
+all:	$(BIN_CMD)/r.refine
+
+
+$(BIN_CMD)/r.refine: $(OBJ) $(GISLIB)  $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBS) $(MATHLIB) $(XDRLIB) 
+
+
+$(GISLIB):	#
+$(DEPGISLIB):	#
+
+
+clean: 
+	rm $(OBJARCH)/*.o
+

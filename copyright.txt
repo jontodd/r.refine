@@ -1,0 +1,16 @@
+/* ************************************************************
+* 
+*  MODULE:	r.refine
+*
+*  Authors:	Jon Todd <jonrtodd@gmail.com>,  Laura Toma <ltoma@bowdoin.edu>
+ * 		        Bowdoin College, USA
+*
+*  Purpose:	convert grid data to TIN 
+*
+*  COPYRIGHT:  
+*			This program is free software under the GNU General Public
+*	       		License (>=v2). Read the file COPYING that comes with GRASS
+*              	for details.
+*
+*
+************************************************************  */
