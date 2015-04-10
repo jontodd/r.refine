@@ -166,7 +166,7 @@ void printTinTile(TIN_TILE* tinTile){
   do{
     // Print tri if we are on its IN edge
     if(curE.type == IN && prevT != NULL){
-      printTriangle(prevT);
+      printTriangleCoords(prevT);
     }
 
     // Go to next edge
